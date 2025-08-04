@@ -50,20 +50,12 @@ XOR(베타적 논리합) : 두 비트가 같으면 0, 다르면 1을 반환하�
 A XOR B = C 일 때 / C XOR B = A / C XOR A = B
 
 
-정상 map.png 시그니처 값
-
-(XOR)
-
-KEY = ????????
+정상 map.png 시그니처 값 (XOR) KEY = ????????
 
 = 암호화된 map.png 시그니처 값
 
 
-정상 map.png 시그니처
-
-(XOR)
-
-변조된 map.png 시그니처
+정상 map.png 시그니처 (XOR) 변조된 map.png 시그니처
 
 = 우리가 찾는 KEY 값
 
