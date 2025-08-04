@@ -78,6 +78,8 @@ Base64 디코딩
 
 **힌트: telnet 패킷 분석**
 
+wireshark에서 telnet 패킷만 찾는 필터
+
 ```
 tcp.port == 23
 ```
