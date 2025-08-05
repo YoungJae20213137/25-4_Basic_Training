@@ -521,6 +521,8 @@ Union SQL Injection : 두 개의 SQL 문을 결합해서 만드는 SQL 공격
 
 ' UNION SELECT 1, 2, 3, 4 ; #
 
+<br>
+
 **2. DB 데이터베이스의 이름을 찾기 - DB 명: board**
 
 ' UNION SELECT 1, 2, schema_name, 4 FROM information_schema.schemata ; #
@@ -530,6 +532,8 @@ Union SQL Injection : 두 개의 SQL 문을 결합해서 만드는 SQL 공격
 왜 schema_name인가? => 그것이 실제 DB 이름을 담고 있는 정확한 컬럼명이기 때문
 
 왜 information_schema.schemata인가? => MySQL에서 DB 목록을 담고 있는 시스템 테이블이기 때문 (schemata는 "스키마들"이라는 뜻)
+
+<br>
 
 **3. Table 명 찾기 - Table 명 : users**
 
@@ -548,6 +552,7 @@ table_schema: 테이블이 속한 데이터베이스 이름
 table_name: 테이블 이름
 table_type: BASE TABLE, VIEW 등
 ```
+<br>
 
 **4. 속성 명 찾기 - 속성명 : id, email, password, flag**
 
@@ -568,6 +573,8 @@ WHERE 조건: table_name = 'users'
 이 조건으로 인해 "users"라는 이름을 가진 테이블의 컬럼들만 가져온 것.
 
 단, users라는 테이블 이름은 모든 데이터베이스에 걸쳐 조회되기 때문에,  만약 같은 이름의 테이블이 다른 DB에 또 있다면, 구분이 필요할 수도 있다.
+
+<br>
 
 **5. SQL 문: SELECT column명 FROM Table명**
 
