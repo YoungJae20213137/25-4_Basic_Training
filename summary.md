@@ -367,85 +367,112 @@ Burp Suite: 웹 모의해킹 및 보안 테스트에 널리 사용되는 도구
 
 Burp Suite의 Proxy는 클라이언트(예: 웹 브라우저)와 서버 사이에서 HTTP(S) 요청을 가로채고 수정할 수 있게 해줍니다. 이를 통해 웹 애플리케이션의 동작을 분석하고 취약점을 테스트할 수 있습니다.
 
-Proxy 설정 단계
+**Proxy 설정 단계**
 
-**Burp Suite 실행 및 프록시 활성화:**
+**1) Burp Suite 실행 및 프록시 활성화**
 
-Burp Suite를 실행합니다.
+- Burp Suite를 실행합니다.
 
-Proxy 탭을 클릭한 뒤 Intercept 탭을 선택합니다.
+- Proxy 탭을 클릭한 뒤 Intercept 탭을 선택합니다.
 
-Intercept is on 상태에서 Burp Suite는 클라이언트와 서버 간의 HTTP 요청과 응답을 가로챕니다.
+- Intercept is on 상태에서 Burp Suite는 클라이언트와 서버 간의 HTTP 요청과 응답을 가로챕니다.
 
-**브라우저에서 프록시 설정:**
+**2) 브라우저에서 프록시 설정**
 
-Burp Suite가 요청을 가로챌 수 있도록 웹 브라우저의 프록시 설정을 변경해야 합니다.
+- Burp Suite가 요청을 가로챌 수 있도록 웹 브라우저의 프록시 설정을 변경해야 합니다.
 
-기본적으로 Burp Suite는 localhost:8080에서 실행됩니다. 이를 웹 브라우저에서 설정해야 합니다.
+- 기본적으로 Burp Suite는 localhost:8080에서 실행됩니다. 이를 웹 브라우저에서 설정해야 합니다.
 
-**Chrome에서 설정하는 방법:**
+**3-1) Chrome에서 설정하는 방법**
 
-브라우저에서 Settings > Advanced > System > Open proxy settings로 이동합니다.
+- 브라우저에서 Settings > Advanced > System > Open proxy settings로 이동합니다.
 
-Manual proxy configuration에서 HTTP Proxy를 localhost로, Port를 8080으로 설정합니다.
+- Manual proxy configuration에서 HTTP Proxy를 localhost로, Port를 8080으로 설정합니다.
 
-**Firefox에서 설정하는 방법:**
+**3-2) Firefox에서 설정하는 방법**
 
-Firefox에서 Preferences > Network Settings > Manual proxy configuration을 선택합니다.
+- Firefox에서 Preferences > Network Settings > Manual proxy configuration을 선택합니다.
 
-HTTP Proxy와 Port를 localhost:8080으로 설정합니다.
+- HTTP Proxy와 Port를 localhost:8080으로 설정합니다.
 
-**SSL 인증서 설치 (HTTPS 사용 시):**
+**4) SSL 인증서 설치 (HTTPS 사용 시)**
 
-Burp Suite가 HTTPS 트래픽을 가로챌 수 있도록, Burp Suite의 SSL 인증서를 브라우저에 설치해야 합니다.
+- Burp Suite가 HTTPS 트래픽을 가로챌 수 있도록, Burp Suite의 SSL 인증서를 브라우저에 설치해야 합니다.
 
-Burp Suite에서 Proxy > Options > Import / export CA certificate에서 SSL 인증서를 내보내고, 이를 브라우저에 설치합니다.
+- Burp Suite에서 Proxy > Options > Import / export CA certificate에서 SSL 인증서를 내보내고, 이를 브라우저에 설치합니다.
 
-http://burpsuite에 접속하여 인증서를 다운로드하고 설치합니다.
+- http://burpsuite에 접속하여 인증서를 다운로드하고 설치합니다.
 
-**가로채기 시작:**
+**5) 가로채기 시작**
 
-브라우저에서 웹사이트를 접속하면, Burp Suite의 Intercept 탭에서 요청과 응답을 볼 수 있습니다.
+- 브라우저에서 웹사이트를 접속하면, Burp Suite의 Intercept 탭에서 요청과 응답을 볼 수 있습니다.
 
-요청이 자동으로 가로채지면, Intercept is on이 활성화되어 있습니다. 이때 요청을 수정하거나, 응답을 변경할 수 있습니다.
+- 요청이 자동으로 가로채지면, Intercept is on이 활성화되어 있습니다. 이때 요청을 수정하거나, 응답을 변경할 수 있습니다.
 
 **2. Burp Suite의 Repeater 사용법**
 
 Repeater는 수정된 요청을 서버로 반복적으로 전송하여 응답을 분석하는 도구입니다. Proxy를 통해 가로챈 요청을 Repeater로 보내고, 요청을 수정한 뒤 서버에 반복해서 요청을 보내는 방식입니다. 이를 통해 취약점을 테스트하거나 응답을 분석하는 데 사용됩니다.
 
-Repeater 사용 단계
+**Repeater 사용 단계**
 
-**요청을 Repeater로 보내기:**
+**1) 요청을 Repeater로 보내기**
 
-Burp Suite의 Proxy 탭에서 가로챈 요청을 선택합니다.
+- Burp Suite의 Proxy 탭에서 가로챈 요청을 선택합니다.
 
-요청을 Repeater로 보냅니다. 이를 위해 요청을 우클릭하고, "Send to Repeater" 옵션을 선택합니다.
+- 요청을 Repeater로 보냅니다. 이를 위해 요청을 우클릭하고, "Send to Repeater" 옵션을 선택합니다.
 
-또는, Request를 선택하고 Ctrl+R (Windows/Linux) 또는 Cmd+R (Mac)을 눌러 Repeater로 보낼 수 있습니다.
+- 또는, Request를 선택하고 Ctrl+R (Windows/Linux) 또는 Cmd+R (Mac)을 눌러 Repeater로 보낼 수 있습니다.
 
-**Repeater에서 요청 수정:**
+**2) Repeater에서 요청 수정**
 
-Repeater 탭을 클릭하면, 보낸 요청이 표시됩니다.
+- Repeater 탭을 클릭하면, 보낸 요청이 표시됩니다.
 
-요청의 헤더나 파라미터, 본문 등을 수정할 수 있습니다.
+- 요청의 헤더나 파라미터, 본문 등을 수정할 수 있습니다.
 
-예를 들어, 로그인 요청에서 username이나 password 값을 수정하여 다른 사용자로 로그인 시도를 하거나, URL 파라미터를 수정할 수 있습니다.
+- 예를 들어, 로그인 요청에서 username이나 password 값을 수정하여 다른 사용자로 로그인 시도를 하거나, URL 파라미터를 수정할 수 있습니다.
 
-**수정된 요청 보내기:**
+**3) 수정된 요청 보내기**
 
-수정한 요청을 서버에 보내려면, "Send" 버튼을 클릭합니다.
+- 수정한 요청을 서버에 보내려면, "Send" 버튼을 클릭합니다.
 
-서버로부터 응답을 받으면, Response 섹션에 해당 응답이 나타납니다. 응답을 분석하여 취약점이나 예상 외의 동작을 확인할 수 있습니다.
+- 서버로부터 응답을 받으면, Response 섹션에 해당 응답이 나타납니다. 응답을 분석하여 취약점이나 예상 외의 동작을 확인할 수 있습니다.
 
-**요청 반복하기:**
+**4) 요청 반복하기**
 
-Send 버튼을 반복적으로 눌러 요청을 계속해서 보낼 수 있습니다.
+- Send 버튼을 반복적으로 눌러 요청을 계속해서 보낼 수 있습니다.
 
-요청을 여러 번 보내면서 응답의 차이점을 비교할 수 있습니다. 예를 들어, 사용자의 권한을 변경하는 요청을 보내고, 서버의 응답을 분석하여 권한 상승이 가능한지 확인할 수 있습니다.
+- 요청을 여러 번 보내면서 응답의 차이점을 비교할 수 있습니다. 예를 들어, 사용자의 권한을 변경하는 요청을 보내고, 서버의 응답을 분석하여 권한 상승이 가능한지 확인할 수 있습니다.
 
-**응답 분석:**
+**5) 응답 분석**
 
-서버로부터 받은 응답을 분석하여, 예상한 결과와 다를 경우 취약점이 있을 수 있다는 것을 확인합니다.
+- 서버로부터 받은 응답을 분석하여, 예상한 결과와 다를 경우 취약점이 있을 수 있다는 것을 확인합니다.
 
-응답 코드, 본문 내용, 헤더 등을 확인하여 웹 애플리케이션의 동작을 파악합니다.
+- 응답 코드, 본문 내용, 헤더 등을 확인하여 웹 애플리케이션의 동작을 파악합니다.
 
+=====================================================================================
+
+### 3번 문제
+
+**원격 코드 실행(RCE)을 통한 웹 쉘(Web Shell) 업로드 취약점**
+
+원격 코드 실행 (Remote Code Execution, RCE) 이란, 공격자가 외부에서 서버에 악성 코드를 보내 실행시키는 공격 기법이다.
+
+즉, 공격자가 웹 서버나 애플리케이션에 접근해서 의도하지 않은 임의의 명령어 또는 스크립트를 원격에서 실행할 수 있다는 뜻이다.
+
+웹 사이트의 파일을 업로드할 수 있는 기능을 통해
+```
+<?php system($_GET['cmd']); ?>
+```
+위와 같은 PHP 코드를 넣은 파일을 업로드 하게 되면, 위 문제에서는 파일을 업로드한 위치가 뜨게 되는데,
+```
+http://[웹 서버 주소]/[PHP 웹 쉘 경로]?cmd=[명령어]
+```
+다음과 같은 URL 형식으로 변조하여 전송하면, [명령어] 부분에서 실행한 리눅스 서버 명령어가 그대로 실행된다.
+
+=====================================================================================
+
+### 4번 문제
+
+3번 문제의 연장선으로, 이번에는 확장자 필터링을 통해 .php 파일 업로드는 금지되었다.
+
+**시도해 볼 것**
