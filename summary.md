@@ -280,7 +280,7 @@ company.htm (문제와 무관, 다운로드 X)
 **HTTP Response Header 찾는 법**
 
 1) Chrome DevTools 이용
-<br>
+
 -웹 페이지를 열고 F12 키를 누르거나 Ctrl+Shift+I (Windows/Linux) 또는 Cmd+Option+I (Mac) 키를 눌러 개발자 도구를 엽니다.
 
 -"Network" 탭을 선택합니다.
@@ -290,7 +290,7 @@ company.htm (문제와 무관, 다운로드 X)
 -요청 항목을 클릭하면 응답 헤더와 함께 요청 헤더, 본문 등을 확인할 수 있습니다.
 
 2) Curl 명령어 사용
-<br>
+
 터미널이나 커맨드 라인에서 curl 명령어를 사용하여 HTTP 응답 헤더를 확인할 수 있다.
 
 ```
