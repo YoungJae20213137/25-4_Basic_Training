@@ -801,23 +801,23 @@ PE 파일 기본 구조는 크게 PE 헤더와 바디(섹션)로 구성된다.
 (문자열 참조 기능)
 
 **자주 쓰는 조합**
-f2 : breakpoint
-Ctrl + f2 : 다시 시작
-f9 : entrypoint 진입
+- f2 : breakpoint
+- Ctrl + f2 : 다시 시작
+- f9 : entrypoint 진입
 
 **그 외 기능**
-f7 : 하나의 OP code 실행 (함수 내부로 진입 // 안으로 단계 진행)
-f8 : 하나의 OP code 실행 (함수만 실행 // 건너서 단계 진행 (스텝 오버))
-Ctrl + G : 원하는 주소로 이동 (해당 주소까지 실행되지는 않음)
-Ctrl + E : 데이터 편집
+- f7 : 하나의 OP code 실행 (함수 내부로 진입 // 안으로 단계 진행)
+- f8 : 하나의 OP code 실행 (함수만 실행 // 건너서 단계 진행 (스텝 오버))
+- Ctrl + G : 원하는 주소로 이동 (해당 주소까지 실행되지는 않음)
+- Ctrl + E : 데이터 편집
 
 문제에서, 
 
 ImageBase(기준점): 0x 00400000
-AddressOfEntryPoint: 0x 0040126F (실제 주소)
-                     0x 0000126F (상대 주소)
-StartOfTextSection:  0x 00401000 (실제 주소)
-                     0x 00001000 (상대 주소)
+
+AddressOfEntryPoint: 0x 0040126F (실제 주소), 0x 0000126F (상대 주소)
+
+StartOfTextSection:  0x 00401000 (실제 주소), 0x 00001000 (상대 주소)
 
 가상 주소는 얼마만큼 떨어져있는지를 표시.
 
