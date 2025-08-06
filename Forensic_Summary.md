@@ -64,3 +64,27 @@ FTK Imager에서 삭제된 파일은 아이콘에 X표시 되어 있음.
 마우스 우클릭 -> Export Files -> 경로 지정 -> 확인
 
 ***
+
+### 4번 문제
+
+이미지 스테가노 그래피 : 숨겨진 파일 추출
+
+(HxD 이용) (Hint: 모든 파일은 고유의 파일 시그니처를 갖고 있음.)
+
+1) HxD 이용해서 파일 시그니처 기반으로 숨겨진 파일 찾아보는 방법
+
+***
+
+### 5번 문제
+
+Log File 분석 : NTFS 로그트래커 Tool 사용
+
+1) NTFS 로그 트래커 활용, $Logfile Path에 $Logfile 로드
+2) $MFT File Path에 $MFT 로드
+3) Parse (DB 이름은 임의로 입력(test 등), 경로도 임의로 지정)
+4) 로그 분석
+5) 답안 cadt{YYYY-MM-DD HH:MM:SS_변경 전 이름_YYYY-MM-DD HH:MM:SS}
+
+***
+
+<br>
