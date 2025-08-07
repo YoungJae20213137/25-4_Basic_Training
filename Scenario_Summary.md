@@ -100,12 +100,11 @@ cat /etc/passwd
 ```
 ems 계정의 해시 함수로 암호화된 비밀번호 획득
 
-test.txt 파일에 복사한 후, 
-
 rockyou.txt.gz 파일 압축 해제
 ```
 gzip -d rockyou.txt.gz
 ```
+test.txt 파일에 복사한 후, 
 ```
 john test.txt --wordlist=/usr/share/wordlists/rockyou.txt
 ```
