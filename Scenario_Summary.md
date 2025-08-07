@@ -171,6 +171,10 @@ cat /root/.bash_history
 
 **힌트**
 ```
+1. SQL Injection 취약점 찾기 or 1 = 1 ; # 등의 구문으로 취약점 찾기
+
+2. ') UNION ~ ; # 구문 이용 SQL Injection (Day2 웹 UNION SQL Injection 문제와 구문은 동일)
+
 ```
 
 **시나리오 흐름도**
