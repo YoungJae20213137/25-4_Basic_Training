@@ -17,7 +17,7 @@
    Day2 파일 업로드 취약점 실습 내용
        - 1) 확장자를 우회) php -> phar, phtml 등등
        - 2) .htaccess(아파치 서버 설정 파일) 업로드 후 확장자 저장 설정 변경
-             Addtype application/x-httpd-php .abc .txt .xyz 등
+             AddType application/x-httpd-php .abc .txt .xyz 등
        - vi .htaccess (.으로 시작되는 파일은 기본적으로 숨김처리 되어있음.
          view - show hidden files 체크 혹은 ls -al
 
