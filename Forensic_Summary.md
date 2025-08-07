@@ -83,6 +83,12 @@ FTK Imager에서 삭제된 파일은 아이콘에 X표시 되어 있음.
 - 포렌식 분석: 숨겨진 JPEG 파일 찾을 때 시그니처로 검색
 - 악성 파일 탐지: 확장자는 .jpg지만 내부 시그니처가 다르면 위장 가능성 있음 (예: .jpg.exe)
 
+**Kali Linux에서 분리**
+
+1) 터미널에서 binwalk forest.jpg
+2) binwalk -D 'jpeg image:jpeg' forest.jpg
+3) ls로 확인하면 forest.jpg.extracted 폴더에 추출된 사진이 있음.
+
 ***
 
 ### 5번 문제
