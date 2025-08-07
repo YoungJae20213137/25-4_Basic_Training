@@ -25,7 +25,12 @@
   - find / -name "flag*"
 
 4.  /etc/passwd 파일
-  - john the reaper (패스워드 크랙 툴)로 패스워드 알아내보기 : 크랙 하고자하는 문자열을 vi로 텍스트 파일
+  - john the reaper (패스워드 크랙 툴)로 패스워드 알아내보기 : 크랙 하고자하는 문자열을 vi로 텍스트 파일로 저장.
+  - john 파일명
+리눅스 : /etc/passwd : 사용자 패스워드 정보를 가지고 있음.
+
+5. setuid가 적용된 파일 찾기 : 인터넷 검색 화룡ㅇ
+  - ssh 접속 명령어 : ssh id@ip
 
 ```
 
