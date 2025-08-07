@@ -146,6 +146,34 @@ Crackme 바이너리 분석 (x32dbg 사용)
 4. 두번째 레지스터 변수: 비교하는 값
 5. FFFFFFC3 = 3D(16진수)에 -를 한 값 = -61(10진수)
 
+```
+1. mov edxm 1 : edx 레지스터에 1을 복사
+  - edx = 1
+2. imul eax, edx, 0 :
+  - eax = 1 * 0 = 0
+3. movsx ecx, byte ptr ss:[ebp+eax-28]
+
+ebp 레지스터 주소 : 0019FF28
+ebp - 28 = 0019FF00
+ebp+eax-28 = 0019FF00 + eax = 0019FF00 (∵eax = 0)
+```
+```
+1. mov edx, 1 : edx 레지스터에 1을 복사
+  - edx = 1
+
+2. imul eax, edx, E : edx * E(14)를 한 값을 eax에 복사한다.
+  - eax = 14(10진수)
+
+[ebp-28+eax]
+어떤 문자열 A의 A[14]
+
+3. sub ecx, 3 : ecx 레지스터에서 3을 뺀 값을 ecx에 저장
+
+4. cmp ecx, 30 : ecx를 30과 비교
+ecx - 3 = 30
+ecx = 33 = 문자열 3
+```
+
 ***
 
 <br>
