@@ -24,8 +24,7 @@
 
 5. TCP 스트림 따라가기 입력 내용에 따른 색 차이
    
-    파란색: 서버
-   
+    파란색: 서버   
     빨간색: 사용자
 
 ***
@@ -68,11 +67,9 @@ A XOR B = C 일 때 / C XOR B = A / C XOR A = B
 ### 3번 문제
 
 **힌트**
-1. icmp ping scan
+1. ICMP PING SCAN
 2. length 차이
-
-
-Base64 디코딩
+3. Base64 디코딩
 
 ***
 
